@@ -4,63 +4,42 @@ namespace App\Livewire;
 
 use App\Models\ward;
 use Livewire\Component;
-
+use Livewire\WithFileUploads;
 class WardList extends Component
 {
-    public $wards;
+    use WithFileUploads;
 
-    protected $listeners = ['submitForm' => 'handleSubmit', 'deleteWard' => 'handleDelete'];
+    public $wardName;
+    public $wardImage;
 
-    public function mount()
+    public function submitForm()
     {
-        $this->wards = Ward::all();
-    }
+        // Validate the inputs
+        $this->validate([
+            'wardName' => 'required|string|max:255',
+            'wardImage' => 'required|image|max:1024', // max size 1MB
+        ]);
 
-    public function handleSubmit($data)
-{
-    if ($data['action'] == 'add') {
-        // Handle image upload and save
-        $imagePath = null;
-        if ($data['wardImage']) {
-            $imagePath = $data['wardImage']->store('wards', 'public'); // Save to storage/wards directory
-        }
+        // Handle image upload and save the path to the database
+        $imagePath = $this->wardImage->store('wards', 'public');
 
+        // Insert into the database
         Ward::create([
-            'name' => $data['wardName'],
-            'image' => $imagePath, // Store image path
+            'name' => $this->wardName,
+            'image' => $imagePath,
         ]);
-    } elseif ($data['action'] == 'edit') {
-        $ward = Ward::find($data['wardId']);
 
-        // Check if an image is being uploaded
-        if ($data['wardImage']) {
-            // Delete the old image from storage (optional, if you want to replace the old image)
-            if ($ward->image && file_exists(storage_path('app/public/' . $ward->image))) {
-                unlink(storage_path('app/public/' . $ward->image));
-            }
+        // Optionally, reset the fields and refresh the list
+        $this->reset(['wardName', 'wardImage']);
+        session()->flash('message', 'Ward added successfully!');
 
-            // Store the new image
-            $imagePath = $data['wardImage']->store('wards', 'public');
-        } else {
-            // Keep the existing image if no new one is uploaded
-            $imagePath = $ward->image;
-        }
-
-        $ward->update([
-            'name' => $data['wardName'],
-            'image' => $imagePath, // Save the new image path or keep the old one
-        ]);
+        // Refresh the list of wards
+        $this->emit('wardUpdated');
     }
-
-    $this->wards = Ward::all(); // Refresh the list of wards
+    public function testMethod()
+{
+    dd('Test Method Called');
 }
-
-
-    public function handleDelete($wardId)
-    {
-        Ward::find($wardId)->delete();
-        $this->wards = Ward::all(); // Refresh the list
-    }
 
     public function render()
     {
