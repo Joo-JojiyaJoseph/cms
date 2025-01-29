@@ -16,6 +16,5 @@
 
         <livewire:house-component :ward_id="$ward->id" />
 
-        <a href="{{ url('/') }}" class="block mt-4 bg-blue-500 text-white px-4 py-2 rounded">Back</a>
     </div>
 </x-app-layout>

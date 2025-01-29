@@ -13,20 +13,24 @@ return new class extends Migration
     {
         Schema::create('family_members', function (Blueprint $table) {
             $table->id();
-            $table->date('dob')->nullable();
-            $table->string('blood_group')->nullable();
-            $table->boolean('married')->default(false);
-            $table->date('marriage_date')->nullable();
-            $table->string('spouse')->nullable();
-            $table->string('job')->nullable();
-            $table->string('place')->nullable();
-            $table->string('address')->nullable();
-            $table->string('job_location')->nullable();
-            $table->string('contact_no_1')->nullable();
-            $table->string('contact_no_2')->nullable();
+            $table->unsignedBigInteger('house_id');
+            $table->string('full_name');
+            $table->string('primary_contact');
+            $table->string('secondary_contact')->nullable();
+            $table->string('whatsapp_number')->nullable();
             $table->string('email')->nullable();
-            $table->date('baptism_date')->nullable();
+            $table->date('dob');
+            $table->string('blood_group');
+            $table->string('marital_status');
+            $table->date('marriage_date')->nullable();
+            $table->string('job');
+            $table->string('current_job_location');
+            $table->text('permanent_address');
+            $table->text('present_address');
+            $table->boolean('same_as_permanent')->default(false);
+            $table->string('baptism_name')->nullable();
             $table->timestamps();
+            
         });
     }
 

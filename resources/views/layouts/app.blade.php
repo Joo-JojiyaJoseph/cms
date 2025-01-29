@@ -58,15 +58,15 @@
                 <div class="p-6">
                     <nav class="mt-6">
                         <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">Dashboard</a>
-                        <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">User
+                        <!-- <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">User
                             Profile</a>
                         <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">User
-                            Management</a>
+                            Management</a> -->
                     </nav>
                 </div>
             </aside>
             <!-- Page Content -->
-            <main class="p-10">
+            <main class="p-10 w-full">
                 {{ $slot }}
             </main>
         </div>

@@ -10,21 +10,10 @@ class FamilyMember extends Model
     use HasFactory;
 
     protected $fillable = [
-        'house_id',
-        'name',
-        'dob',
-        'blood_group',
-        'married',
-        'marriage_date',
-        'spouse',
-        'job',
-        'place',
-        'address',
-        'job_location',
-        'contact_no_1',
-        'contact_no_2',
-        'email',
-        'baptism_date',
+        'house_id', 'full_name', 'primary_contact', 'secondary_contact', 'whatsapp_number',
+        'email', 'dob', 'blood_group', 'marital_status', 'marriage_date',
+        'job', 'current_job_location', 'permanent_address', 'present_address',
+        'same_as_permanent', 'baptism_name'
     ];
 
     public function house()

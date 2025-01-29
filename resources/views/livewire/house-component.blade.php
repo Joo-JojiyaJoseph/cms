@@ -5,7 +5,7 @@
         <div class="bg-green-200 text-green-800 p-2 my-2">{{ session('message') }}</div>
     @endif
 
-    <div class="grid grid-cols-2 gap-4 mt-4">
+    <div class="grid grid-cols-4 gap-4 mt-4">
         @foreach ($houses as $house)
             <div class="bg-gray-100 p-4 rounded shadow">
                  <h2 class="text-xl font-semibold cursor-pointer" wire:click="goToFamilyMemberDashboard({{ $house->id }})">{{ $house->house_name }}</h2>
