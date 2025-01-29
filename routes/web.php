@@ -19,6 +19,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/ward/{id}', [HomeController::class, 'warddashboard'])->name('ward.dashboard');
-Route::get('/house/{houseId}', [HomeController::class, 'familydashboard'])->name('house.dashboard');
+Route::get('/house/{id}', [HomeController::class, 'familydashboard'])->name('house.dashboard');
 
 require __DIR__.'/auth.php';
