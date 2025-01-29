@@ -2,47 +2,100 @@
 
 namespace App\Livewire;
 
-use App\Models\ward;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Models\Ward;
 class WardList extends Component
 {
     use WithFileUploads;
 
-    public $wardName;
-    public $wardImage;
-
-    public function submitForm()
-    {
-        // Validate the inputs
-        $this->validate([
-            'wardName' => 'required|string|max:255',
-            'wardImage' => 'required|image|max:1024', // max size 1MB
-        ]);
-
-        // Handle image upload and save the path to the database
-        $imagePath = $this->wardImage->store('wards', 'public');
-
-        // Insert into the database
-        Ward::create([
-            'name' => $this->wardName,
-            'image' => $imagePath,
-        ]);
-
-        // Optionally, reset the fields and refresh the list
-        $this->reset(['wardName', 'wardImage']);
-        session()->flash('message', 'Ward added successfully!');
-
-        // Refresh the list of wards
-        $this->emit('wardUpdated');
-    }
-    public function testMethod()
-{
-    dd('Test Method Called');
-}
+    public $wards, $ward_id, $name, $image, $newImage;
+    public $isOpen = false;
 
     public function render()
     {
+        $this->wards = Ward::all();
         return view('livewire.ward-list');
     }
+
+    public function openModal()
+    {
+        $this->resetFields();
+        $this->isOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
+    private function resetFields()
+    {
+        $this->ward_id = '';
+        $this->name = '';
+        $this->image = '';
+        $this->newImage = '';
+    }
+
+    public function saveWard()
+    {
+        $validatedData = $this->validate([
+            'name' => 'required|string',
+            'newImage' => $this->ward_id ? 'nullable|image|max:1024' : 'required|image|max:1024',
+        ]);
+
+        if ($this->newImage) {
+            $imageName = $this->newImage->store('wards', 'public');
+        } else {
+            $imageName = $this->image;
+        }
+
+        Ward::updateOrCreate(
+            ['id' => $this->ward_id],
+            ['name' => $this->name, 'image' => $imageName]
+        );
+
+        session()->flash('message', $this->ward_id ? 'Ward updated successfully!' : 'Ward added successfully!');
+
+        $this->closeModal();
+    }
+
+    public function editWard($id)
+    {
+        $ward = Ward::findOrFail($id);
+        $this->ward_id = $ward->id;
+        $this->name = $ward->name;
+        $this->image = $ward->image;
+        $this->isOpen = true;
+    }
+
+    public function deleteWard($id)
+    {
+        // $ward = Ward::findOrFail($id);
+        // if ($ward->image) {
+        //     unlink(storage_path('app/public/' . $ward->image));
+        // }
+        // $ward->delete();
+        // session()->flash('message', 'Ward deleted successfully!');
+
+        try {
+            $ward = Ward::findOrFail($id);
+
+            // Optional: Delete image if exists
+            if ($ward->image && file_exists(storage_path('app/public/' . $ward->image))) {
+                unlink(storage_path('app/public/' . $ward->image));
+            }
+
+            $ward->delete();
+
+            session()->flash('message', 'Ward deleted successfully!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            session()->flash('error', 'Cannot delete ward. It is referenced in another record.');
+        }
+    }
+    public function goToWardDashboard($id)
+{
+    return redirect()->route('ward.dashboard', ['id' => $id]);
+}
+
 }
