@@ -5,14 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <link rel="stylesheet" href="https://unpkg.com/livewire/livewire.css">
 
     @livewireStyles
     <!-- Scripts -->
@@ -58,6 +56,13 @@
                 <div class="p-6">
                     <nav class="mt-6">
                         <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">Dashboard</a>
+                        <form method="POST" action="{{ route('logout') }}" class="mt-4">
+                @csrf
+                <button type="submit" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">
+                    Logout
+                </button>
+            </form>
+
                         <!-- <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">User
                             Profile</a>
                         <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">User

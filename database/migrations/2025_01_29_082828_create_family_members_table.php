@@ -29,6 +29,9 @@ return new class extends Migration
             $table->text('present_address');
             $table->boolean('same_as_permanent')->default(false);
             $table->string('baptism_name')->nullable();
+            $table->string('relationship');  // Add Relationship Field
+            $table->date('member_of_parish_since')->nullable(); // Add Parish Membership Date
+        
             $table->timestamps();
             
         });

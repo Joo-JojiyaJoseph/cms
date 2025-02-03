@@ -1,5 +1,8 @@
 <div class="mt-6">
+<div class="bg-gray-200 p-4 rounded shadow mt-4 flex gap-6">
     <button wire:click="openModal" class="bg-blue-500 text-white px-4 py-2 rounded">Add House</button>
+    <button onclick="window.history.back()" class="bg-gray-500 text-white px-4 py-2 rounded"> Back</button>
+</div>
 
     @if (session()->has('message'))
         <div class="bg-green-200 text-green-800 p-2 my-2">{{ session('message') }}</div>
