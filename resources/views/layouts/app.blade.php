@@ -63,9 +63,9 @@
                                 <span x-show="open">▲</span>
                             </button>
                             <div x-show="open" class="ml-4 mt-2 space-y-2">
-                                <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">ward List</a>
-                                <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">family List</a>
-                                <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">Family member</a>
+                                {{-- <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">ward List</a> --}}
+                                {{-- <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">family List</a> --}}
+                                <a href="{{ route('familyMemberReport') }}" class="block px-4 py-2 text-gray-600 hover:bg-gray-200 rounded">Family member</a>
                             </div>
                         </div>
                         <form method="POST" action="{{ route('logout') }}" class="mt-4">

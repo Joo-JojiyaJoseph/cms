@@ -19,5 +19,8 @@ class HomeController extends Controller
             $familyMembers = $house->familyMembers;  // Assuming relation is defined in the House model
             return view('familydashboard', compact('house', 'familyMembers'));
         }
+        public function familyMemberReport(){
+            return view('report.familyMemberReport');
+        }
 
 }

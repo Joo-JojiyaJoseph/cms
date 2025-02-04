@@ -63,14 +63,8 @@
           <div class="bg-white p-5 rounded shadow-lg w-1/3">
               <h2 class="text-lg mb-4">{{ $ward_id ? 'Edit Ward' : 'Add Ward' }}</h2>
 
-              <input type="text" wire:model="name" placeholder="Ward Name" class="border px-2 py-1 w-full mb-3">
+              <input type="text" wire:model="name" placeholder="Ward Leader" class="border px-2 py-1 w-full mb-3">
 
-              @if ($image)
-                  <p>Current Image:</p>
-                  <img src="{{ asset('storage/'.$image) }}" width="50" class="mb-2">
-              @endif
-
-              <input type="file" wire:model="newImage" class="border px-2 py-1 w-full mb-3">
 
               <div class="flex justify-end">
                   <button wire:click="saveWardLeader" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Save</button>
