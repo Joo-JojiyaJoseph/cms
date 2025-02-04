@@ -44,7 +44,7 @@
                 <h2 class="text-lg mb-4">{{ $family_member_id ? 'Edit Family Member' : 'Add Family Member' }}</h2>
                 <div class="flex gap-6">
                     <input type="text" wire:model="full_name" placeholder="Full Name*"
-                        class="border px-2 py-1  w-0.5 mb-3">
+                        class="border px-2 py-1 mb-3">
                     <!-- Relationship Dropdown -->
                     <label>
                         <select wire:model.live="gender" class="border px-2 py-1 w-full mb-3">
@@ -55,7 +55,7 @@
                         </select>
                     </label>
                     <label>
-                        <select wire:model.live="relationship" class="border px-2 py-1 w-0.5  mb-3">
+                        <select wire:model.live="relationship" class="border px-2 py-1  mb-3">
                             <option value="">Select Relationship*</option>
                             <option value="Father">Father</option>
                             <option value="Mother">Mother</option>
