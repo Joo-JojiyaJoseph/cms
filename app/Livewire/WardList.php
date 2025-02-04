@@ -11,6 +11,7 @@ class WardList extends Component
 
     public $wards, $ward_id, $name, $image, $newImage;
     public $isOpen = false;
+    public $isOpenWardLeader = false;
 
     public function render()
     {
@@ -24,9 +25,20 @@ class WardList extends Component
         $this->isOpen = true;
     }
 
+    public function openModalWardLeader()
+    {
+        $this->resetFields();
+        $this->isOpenWardLeader = true;
+    }
+
     public function closeModal()
     {
         $this->isOpen = false;
+    }
+
+    public function closeModalLeader()
+    {
+        $this->isOpenWardLeader = false;
     }
 
     private function resetFields()
@@ -58,6 +70,13 @@ class WardList extends Component
         session()->flash('message', $this->ward_id ? 'Ward updated successfully!' : 'Ward added successfully!');
 
         $this->closeModal();
+    }
+
+    public function saveWardLeader()
+    {
+      
+
+        $this->closeModalLeader();
     }
 
     public function editWard($id)

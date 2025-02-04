@@ -4,13 +4,13 @@ namespace App\Livewire;
 
 use App\Models\FamilyMember;
 use Livewire\Component;
- 
+
 class FamilyMemberComponent extends Component
 {
     public $house_id, $family_members;
     public $family_member_id, $full_name, $primary_contact, $secondary_contact, $whatsapp_number,
-     $email, $dob, $blood_group, $job, $current_job_location, 
-     $permanent_address, $present_address, $baptism_name, $relationship, $member_of_parish_since;
+     $email, $dob, $blood_group, $job, $current_job_location,
+     $permanent_address, $present_address, $baptism_name, $baptism_date,$confirmation_date,$relationship, $member_of_parish_since,$gender;
     public $isOpen = false;
     public $marital_status="";
      public $marriage_date;
@@ -55,7 +55,7 @@ class FamilyMemberComponent extends Component
             $this->marital_status = null;
             $this->marriage_date = null;
         }
-    
+
         $this->isOpen = true;
     }
 
@@ -118,7 +118,10 @@ class FamilyMemberComponent extends Component
                 'permanent_address' => $this->permanent_address,
                 'present_address' => $this->present_address,
                 'baptism_name' => $this->baptism_name,
-                'member_of_parish_since' => $this->member_of_parish_since ? date('Y', strtotime($this->member_of_parish_since)) : null,
+                'baptism_date' => $this->baptism_date,
+                'confirmation_date' => $this->confirmation_date,
+                'member_of_parish_since' => $this->member_of_parish_since,
+                'gender' => $this->gender,
             ]
         );
 

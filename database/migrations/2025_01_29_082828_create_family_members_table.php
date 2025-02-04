@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('house_id');
             $table->string('full_name');
+            $table->string('gender');
             $table->string('primary_contact');
             $table->string('secondary_contact')->nullable();
             $table->string('whatsapp_number')->nullable();
@@ -29,11 +30,13 @@ return new class extends Migration
             $table->text('present_address');
             $table->boolean('same_as_permanent')->default(false);
             $table->string('baptism_name')->nullable();
+            $table->date('baptism_date')->nullable();
+            $table->date('confirmation_date')->nullable();
             $table->string('relationship')->default('Unknown');   // Add Relationship Field
             $table->date('member_of_parish_since')->nullable(); // Add Parish Membership Date
-        
+
             $table->timestamps();
-            
+
         });
     }
 

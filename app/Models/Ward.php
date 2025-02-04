@@ -11,4 +11,9 @@ class Ward extends Model
 {
     return $this->hasMany(House::class);
 }
+
+public function families()
+{
+    return $this->hasManyThrough(FamilyMember::class, House::class);
+}
 }

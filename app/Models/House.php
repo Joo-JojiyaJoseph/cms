@@ -15,4 +15,10 @@ class House extends Model
     {
         return $this->belongsTo(Ward::class);
     }
+
+    // Assuming Family has many Members
+    public function members()
+    {
+        return $this->hasMany(FamilyMember::class);
+    }
 }
