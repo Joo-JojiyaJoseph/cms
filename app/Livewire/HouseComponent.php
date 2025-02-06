@@ -4,11 +4,14 @@ namespace App\Livewire;
 
 use App\Models\House;
 use Livewire\Component;
+use App\Models\Ward;
+use Illuminate\Http\Request;
+use App\Models\FamilyMember;
 
 class HouseComponent extends Component
-{
+{  public $isOpenWardLeader = false;
 
-    public $ward_id, $houses, $house_id, $house_name, $number_of_members;
+    public $ward_id, $houses, $house_id, $house_name, $number_of_members,$ward,$members;
     public $isOpen = false;
 
     public function mount($ward_id)
@@ -18,8 +21,43 @@ class HouseComponent extends Component
 
     public function render()
     {
+
+        
+
+        $this->ward = Ward::findOrFail($this->ward_id);
         $this->houses = House::where('ward_id', $this->ward_id)->get();
+        $this->members = FamilyMember::whereHas('house', function ($query) {
+            $query->where('ward_id', $this->ward_id);
+        })->get();
         return view('livewire.house-component');
+    }
+    public function openModalWardLeader()
+    {
+        $this->isOpenWardLeader = true;
+    }
+
+
+    public function closeModalLeader()
+    {
+        $this->isOpenWardLeader = false;
+    }
+
+    public function saveWardLeader()
+    {
+        $validatedData = $this->validate([
+            'wardleader' => 'required|string',
+        ]);
+
+        // FamilyMember::updateOrCreate(
+        //     ['id' => $this->wardleader],
+        //     ['wardleader' => 1]
+        // );
+        FamilyMember::query()->update(['wardleader' => 0]);
+        FamilyMember::where('id', $this->wardleader)->update(['wardleader' => 1]);
+
+        session()->flash('message', $this->ward_id ? 'Ward Leader updated successfully!' : 'Ward Leader added successfully!');
+
+        $this->closeModalLeader();
     }
 
     public function openModal()

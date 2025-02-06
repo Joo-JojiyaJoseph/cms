@@ -57,6 +57,7 @@
                     <label>
                         <select wire:model.live="relationship" class="border px-2 py-1  mb-3">
                             <option value="">Select Relationship*</option>
+                            <option value="Own">Own</option>
                             <option value="Father">Father</option>
                             <option value="Mother">Mother</option>
                             <option value="Grand Father">Grand Father</option>
@@ -79,12 +80,21 @@
                         class="border px-2 py-1 w-full mb-3">
                 </div>
                 <div class="flex gap-6">
-                    <input type="email" wire:model="email" placeholder="Email" class="border px-2 py-1 w-full mb-3">
+                    <input type="email" wire:model="email" placeholder="Email" class="border px-2 py-1 w-full">
                     <label>Date Of Birth
                         <input type="date" wire:model="dob" placeholder="Date of Birth*"
                             class="border px-2 py-1 w-full mb-3"></label>
-                    <input type="text" wire:model="blood_group" placeholder="Blood Group*"
-                        class="border px-2 py-1 w-full mb-3">
+                            <select wire:model="blood_group" class="border px-2 py-1 w-full mb-3">
+    <option value="">Select Blood Group*</option>
+    <option value="A+">A+</option>
+    <option value="A-">A-</option>
+    <option value="B+">B+</option>
+    <option value="B-">B-</option>
+    <option value="O+">O+</option>
+    <option value="O-">O-</option>
+    <option value="AB+">AB+</option>
+    <option value="AB-">AB-</option>
+</select>
                 </div>
                 <div class="flex gap-6">
                         <label>Marriage status

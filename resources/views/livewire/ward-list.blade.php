@@ -1,7 +1,7 @@
 <div class="container mx-auto p-4">
     <div class="bg-gray-200 p-4 rounded shadow mt-4 flex gap-6">
         <button wire:click="openModal" class="bg-blue-500 text-white px-4 py-2 rounded">Add Ward</button>
-        <button wire:click="openModalWardLeader" class="bg-blue-500 text-white px-4 py-2 rounded">Add Ward Leader</button>
+        <!-- <button wire:click="openModalWardLeader" class="bg-blue-500 text-white px-4 py-2 rounded">Add Ward Leader</button> -->
         <button onclick="window.history.back()" class="bg-gray-500 text-white px-4 py-2 rounded"> Back</button>
     </div>
     @if (session()->has('message'))
@@ -59,26 +59,5 @@
         </div>
     @endif
 
-    <!-- Modal for ward leader -->
-    @if ($isOpenWardLeader)
-        <div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
-            <div class="bg-white p-5 rounded shadow-lg w-1/3">
-                <h2 class="text-lg mb-4">{{ $ward_id ? 'Edit Ward Leader' : 'Add Ward leader' }}</h2>
-                <div class="form-group flex flex-col">
-                    <select wire:model.live="wardleader" class="form-control">
-                        <option value="">All Families</option>
-                        @foreach ($members as $member)
-                            <option value="{{ $member->id }}">{{ $member->fullname }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="flex justify-end">
-                    <button wire:click="saveWardLeader"
-                        class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Save</button>
-                    <button wire:click="closeModalLeader"
-                        class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
-                </div>
-            </div>
-        </div>
-    @endif
+
 </div>
