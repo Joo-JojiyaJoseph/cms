@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\FamilyMember;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Ward;
@@ -9,13 +10,14 @@ class WardList extends Component
 {
     use WithFileUploads;
 
-    public $wards, $ward_id, $name, $image, $newImage;
+    public $wards, $ward_id, $name, $image, $newImage,$members,$wardleader;
     public $isOpen = false;
     public $isOpenWardLeader = false;
 
     public function render()
     {
         $this->wards = Ward::all();
+        $this->members = FamilyMember::all();
         return view('livewire.ward-list');
     }
 
@@ -72,9 +74,21 @@ class WardList extends Component
         $this->closeModal();
     }
 
+
     public function saveWardLeader()
     {
-      
+        $validatedData = $this->validate([
+            'wardleader' => 'required|string',
+        ]);
+
+        // FamilyMember::updateOrCreate(
+        //     ['id' => $this->wardleader],
+        //     ['wardleader' => 1]
+        // );
+        FamilyMember::query()->update(['wardleader' => 0]);
+        FamilyMember::where('id', $this->wardleader)->update(['wardleader' => 1]);
+
+        session()->flash('message', $this->ward_id ? 'Ward Leader updated successfully!' : 'Ward Leader added successfully!');
 
         $this->closeModalLeader();
     }

@@ -1,9 +1,9 @@
 <div class="container mx-auto p-4">
     <div class="bg-gray-200 p-4 rounded shadow mt-4 flex gap-6">
-    <button wire:click="openModal" class="bg-blue-500 text-white px-4 py-2 rounded">Add Ward</button>
-    <button wire:click="openModalWardLeader" class="bg-blue-500 text-white px-4 py-2 rounded">Add Ward Leader</button>
-    <button onclick="window.history.back()" class="bg-gray-500 text-white px-4 py-2 rounded"> Back</button>
-</div>
+        <button wire:click="openModal" class="bg-blue-500 text-white px-4 py-2 rounded">Add Ward</button>
+        <button wire:click="openModalWardLeader" class="bg-blue-500 text-white px-4 py-2 rounded">Add Ward Leader</button>
+        <button onclick="window.history.back()" class="bg-gray-500 text-white px-4 py-2 rounded"> Back</button>
+    </div>
     @if (session()->has('message'))
         <div class="bg-green-200 text-green-800 p-2 my-2">{{ session('message') }}</div>
     @endif
@@ -18,16 +18,18 @@
         </thead>
         <tbody>
             @foreach ($wards as $ward)
-            <tr class="cursor-pointer hover:bg-gray-200" wire:click="goToWardDashboard({{ $ward->id }})">
-                    <td class="border px-4 py-2">{{ $ward->name }}</td>
-                    <td class="border px-4 py-2">
+                <tr class="cursor-pointer {{ $ward->wardleader == 1 ? 'bg-green-500' : 'bg-green-200' }}" >
+                    <td class="border px-4 py-2" wire:click="goToWardDashboard({{ $ward->id }})">{{ $ward->name }}</td>
+                    <td class="border px-4 py-2" wire:click="goToWardDashboard({{ $ward->id }})">
                         @if ($ward->image)
-                            <img src="{{ asset('storage/'.$ward->image) }}" width="50">
+                            <img src="{{ asset('storage/' . $ward->image) }}" width="50">
                         @endif
                     </td>
                     <td class="border px-4 py-2">
-                        <button wire:click="editWard({{ $ward->id }})" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</button>
-                        <button wire:click="deleteWard({{ $ward->id }})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                        <button wire:click="editWard({{ $ward->id }})"
+                            class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</button>
+                        <button wire:click="deleteWard({{ $ward->id }})"
+                            class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
                     </td>
                 </tr>
             @endforeach
@@ -35,7 +37,7 @@
     </table>
 
     <!-- Modal -->
-    @if($isOpen)
+    @if ($isOpen)
         <div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
             <div class="bg-white p-5 rounded shadow-lg w-1/3">
                 <h2 class="text-lg mb-4">{{ $ward_id ? 'Edit Ward' : 'Add Ward' }}</h2>
@@ -44,7 +46,7 @@
 
                 @if ($image)
                     <p>Current Image:</p>
-                    <img src="{{ asset('storage/'.$image) }}" width="50" class="mb-2">
+                    <img src="{{ asset('storage/' . $image) }}" width="50" class="mb-2">
                 @endif
 
                 <input type="file" wire:model="newImage" class="border px-2 py-1 w-full mb-3">
@@ -57,20 +59,26 @@
         </div>
     @endif
 
-      <!-- Modal for ward leader -->
-      @if($isOpenWardLeader)
-      <div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
-          <div class="bg-white p-5 rounded shadow-lg w-1/3">
-              <h2 class="text-lg mb-4">{{ $ward_id ? 'Edit Ward' : 'Add Ward' }}</h2>
-
-              <input type="text" wire:model="name" placeholder="Ward Leader" class="border px-2 py-1 w-full mb-3">
-
-
-              <div class="flex justify-end">
-                  <button wire:click="saveWardLeader" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Save</button>
-                  <button wire:click="closeModalLeader" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
-              </div>
-          </div>
-      </div>
-  @endif
+    <!-- Modal for ward leader -->
+    @if ($isOpenWardLeader)
+        <div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+            <div class="bg-white p-5 rounded shadow-lg w-1/3">
+                <h2 class="text-lg mb-4">{{ $ward_id ? 'Edit Ward Leader' : 'Add Ward leader' }}</h2>
+                <div class="form-group flex flex-col">
+                    <select wire:model.live="wardleader" class="form-control">
+                        <option value="">All Families</option>
+                        @foreach ($members as $member)
+                            <option value="{{ $member->id }}">{{ $member->fullname }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="flex justify-end">
+                    <button wire:click="saveWardLeader"
+                        class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Save</button>
+                    <button wire:click="closeModalLeader"
+                        class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>

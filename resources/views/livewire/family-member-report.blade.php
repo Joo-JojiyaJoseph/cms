@@ -9,7 +9,7 @@
             @endforeach
         </select>
     </div>
-
+ 
     <div class="form-group flex flex-col">
         <label for="familyFilter">Filter by Family</label>
         <select wire:model.live="familyFilter" class="form-control">

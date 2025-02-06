@@ -32,7 +32,8 @@ return new class extends Migration
             $table->string('baptism_name')->nullable();
             $table->date('baptism_date')->nullable();
             $table->date('confirmation_date')->nullable();
-            $table->string('relationship')->default('Unknown');   // Add Relationship Field
+            $table->string('relationship')->default('Unknown');
+            $table->string('wardleader')->default('0');  // Add Relationship Field
             $table->date('member_of_parish_since')->nullable(); // Add Parish Membership Date
 
             $table->timestamps();
