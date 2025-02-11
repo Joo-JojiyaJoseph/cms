@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('house_id');
             $table->string('full_name');
             $table->string('gender');
+            $table->string('spouse');
             $table->string('primary_contact');
             $table->string('secondary_contact')->nullable();
             $table->string('whatsapp_number')->nullable();
@@ -35,6 +36,7 @@ return new class extends Migration
             $table->string('relationship')->default('Unknown');
             $table->string('wardleader')->default('0');  // Add Relationship Field
             $table->date('member_of_parish_since')->nullable(); // Add Parish Membership Date
+            $table->string('image')->nullable();
 
             $table->timestamps();
 

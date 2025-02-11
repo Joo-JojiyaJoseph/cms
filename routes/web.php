@@ -16,6 +16,15 @@ Route::get('/clear-cache', function() {
        echo  $exitCode;
     // return what you want
 });
+Route::get('/link', function() {
+    $fromFolder = storage_path("app/public");
+    $toFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
+    if(!File::exists($toFolder)) {
+        symlink($fromFolder, $toFolder);
+        return redirect(route('index'));
+    }
+    return ('Storage folder already exist in public_html, delete Storage folder and refresh');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

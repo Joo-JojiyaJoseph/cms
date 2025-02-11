@@ -13,7 +13,7 @@ class FamilyMember extends Model
         'house_id', 'full_name', 'primary_contact', 'secondary_contact', 'whatsapp_number',
         'email', 'dob', 'blood_group', 'marital_status', 'marriage_date',
         'job', 'current_job_location', 'permanent_address', 'present_address',
-        'same_as_permanent', 'baptism_name', 'baptism_date', 'confirmation_date', 'relationship','gender'
+        'same_as_permanent', 'baptism_name', 'baptism_date', 'confirmation_date', 'relationship','gender','spouse','image'
     ];
 
     public function house()

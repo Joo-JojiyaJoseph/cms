@@ -11,7 +11,7 @@ use App\Models\FamilyMember;
 class HouseComponent extends Component
 {  public $isOpenWardLeader = false;
 
-    public $ward_id, $houses, $house_id, $house_name, $number_of_members,$ward,$members;
+    public $ward_id, $houses, $house_id, $house_name, $number_of_members,$ward,$members,$wardleader,$wardleader_name;
     public $isOpen = false;
 
     public function mount($ward_id)
@@ -22,13 +22,17 @@ class HouseComponent extends Component
     public function render()
     {
 
-        
-
         $this->ward = Ward::findOrFail($this->ward_id);
         $this->houses = House::where('ward_id', $this->ward_id)->get();
         $this->members = FamilyMember::whereHas('house', function ($query) {
             $query->where('ward_id', $this->ward_id);
         })->get();
+
+        $this->wardleader_name = FamilyMember::whereHas('house', function ($query) {
+            $query->where('ward_id', $this->ward_id);
+        })->where('wardleader',1)->first();
+
+
         return view('livewire.house-component');
     }
     public function openModalWardLeader()
@@ -45,7 +49,7 @@ class HouseComponent extends Component
     public function saveWardLeader()
     {
         $validatedData = $this->validate([
-            'wardleader' => 'required|string',
+            'wardleader' => 'required',
         ]);
 
         // FamilyMember::updateOrCreate(

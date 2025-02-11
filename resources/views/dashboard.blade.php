@@ -3,14 +3,14 @@
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             <div class="bg-white p-4 shadow rounded-lg">
                 <h2 class="text-lg font-bold">Palakkad</h2>
-                <p class="text-green-500">Dioceses</p>
+                <p class="text-green-500">Diocese</p>
             </div>
             <div class="bg-white p-4 shadow rounded-lg">
-                <h2 class="text-lg font-bold">Holy Spririt</h2>
-                <p class="text-green-500">Forance</p>
+                <h2 class="text-lg font-bold">Mannardkkad</h2>
+                <p class="text-green-500">Forane</p>
             </div>
             <div class="bg-white p-4 shadow rounded-lg">
-                <h2 class="text-lg font-bold">Holy Spririt</h2>
+                <h2 class="text-lg font-bold">Holy Spirit Forane Church Perimbadari</h2>
                 <p class="text-red-500">Church</p>
             </div>
         </div>
