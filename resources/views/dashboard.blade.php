@@ -6,7 +6,7 @@
                 <p class="text-green-500">Diocese</p>
             </div>
             <div class="bg-white p-4 shadow rounded-lg">
-                <h2 class="text-lg font-bold">Mannardkkad</h2>
+                <h2 class="text-lg font-bold">Mannarkkad</h2>
                 <p class="text-green-500">Forane</p>
             </div>
             <div class="bg-white p-4 shadow rounded-lg">
@@ -19,7 +19,7 @@
             @livewire('ward-list') <!-- Display the list of wards -->
         </div>
 
-<!-- 
+<!--
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
             <div class="bg-white p-4 shadow rounded-lg">
                 <h2 class="text-lg font-bold">Soft UI Dashboard</h2>

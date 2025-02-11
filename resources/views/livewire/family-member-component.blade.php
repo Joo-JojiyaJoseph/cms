@@ -18,7 +18,7 @@
                 <h2 class="text-xl font-semibold">{{ $member->full_name }} |{{ $member->gender }} </h2>
                 <p><strong>Relationship:</strong> {{ $member->relationship }}</p>
                 <p><strong>Primary Contact:</strong> {{ $member->primary_contact }}</p>
-                <!-- <p><strong>Whatsapp:</strong> {{ $member->whatsapp_number }}</p> -->
+                <p><strong>Whatsapp:</strong> {{ $member->whatsapp_number }}</p>
                 <p><strong>Email:</strong> {{ $member->email }}</p>
                 <p><strong>Birth:</strong> {{ $member->dob }} | <strong>Blood Group:</strong>
                     {{ $member->blood_group }}</p>
@@ -32,7 +32,7 @@
                 <p><strong>Baptism Name:</strong> {{ $member->baptism_name }} <br/> <strong>Baptism
                         Date:</strong>{{ $member->baptism_date }}</p>
                 <p><strong>Confirmation Date:</strong> {{ $member->confirmation_date }} </p>
-                <p><strong>Member of Parish Since:</strong> {{ $member->member_since }}</p>
+                <p><strong>Member of Parish Since:</strong> {{ $member->member_of_parish_since }}</p>
                 <button wire:click="editFamilyMember({{ $member->id }})"
                     class="bg-yellow-500 text-white px-2 py-1 rounded mt-2">Edit</button>
                 <button wire:click="deleteFamilyMember({{ $member->id }})"
@@ -53,7 +53,10 @@
 
     <div class="flex flex-wrap gap-4">
         <input type="file" wire:model="newImage" class="border px-2 py-1 mb-3 flex-1 min-w-[250px]">
+        <div class="flex-col">
         <input type="text" wire:model="full_name" placeholder="Full Name*" class="border px-2 py-1 mb-3 flex-1 min-w-[250px] required">
+        @error('full_name') <span class="text-red-500">{{ $message }}</span> @enderror
+        </div>
 
         <label class="flex-1 min-w-[250px]">
             <select wire:model.live="gender" class="border px-2 py-1 mb-3 w-full required">
@@ -62,6 +65,7 @@
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
             </select>
+            @error('gender') <span class="text-red-500">{{ $message }}</span> @enderror
         </label>
         <label class="flex-1 min-w-[250px]">
             <select wire:model.live="relationship" class="border px-2 py-1 mb-3 w-full required">
@@ -78,12 +82,14 @@
                 <option value="Daughter">Daughter</option>
                 <option value="Son">Son</option>
             </select>
+            @error('relationship') <span class="text-red-500">{{ $message }}</span> @enderror
         </label>
     </div>
 </div>
 
 <div class="flex flex-wrap gap-6  mb-3 ">
     <input type="text" wire:model="primary_contact" placeholder="Primary Contact*" class="border px-2 py-1 flex-1 min-w-[250px] required">
+    @error('primary_contact') <span class="text-red-500">{{ $message }}</span> @enderror
     <input type="text" wire:model="secondary_contact" placeholder="Secondary Contact" class="border px-2 py-1 flex-1 min-w-[250px]">
 </div>
 
@@ -92,6 +98,7 @@
     <label class="flex-1 min-w-[250px]">
         Date Of Birth
         <input type="date" wire:model="dob" class="border px-2 py-1 w-full required">
+        @error('dob') <span class="text-red-500">{{ $message }}</span> @enderror
     </label>
     <select wire:model="blood_group" class="border px-2 py-1 flex-1 min-w-[250px]">
         <option value="">Select Blood Group*</option>
@@ -110,11 +117,13 @@
     <label class="flex-1 min-w-[250px]">
         Marriage Status
         <select wire:model.live="marital_status" class="border px-2 py-1 w-full required">
+            <option value="Select">Select</option>
             <option value="Single">Single</option>
             <option value="Married">Married</option>
             <option value="Widowed">Widowed</option>
             <option value="Divorced">Divorced</option>
         </select>
+        @error('marital_status') <span class="text-red-500">{{ $message }}</span> @enderror
     </label>
     @if ($marital_status === 'Married')
         <label class="flex-1 min-w-[250px]">
@@ -166,6 +175,7 @@
     <label class="flex-1 min-w-[250px]">
         Baptism Name
         <input type="text" wire:model="baptism_name" placeholder="Baptism Name" class="border px-2 py-1 w-full required">
+        @error('baptism_name') <span class="text-red-500">{{ $message }}</span> @enderror
     </label>
     <label class="flex-1 min-w-[250px]">
         Baptism Date

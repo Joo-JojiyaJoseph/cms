@@ -7,11 +7,15 @@ use Livewire\Component;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 use App\Models\FamilyMember;
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class HouseComponent extends Component
 {  public $isOpenWardLeader = false;
 
-    public $ward_id, $houses, $house_id, $house_name, $number_of_members,$ward,$members,$wardleader,$wardleader_name;
+    public $ward_id, $houses, $house_id, $house_name, $number_of_members,$ward,$members,$wardleader,$wardleader_name,$email,$password,$wardleaderidlogin;
     public $isOpen = false;
 
     public function mount($ward_id)
@@ -48,14 +52,29 @@ class HouseComponent extends Component
 
     public function saveWardLeader()
     {
+
         $validatedData = $this->validate([
-            'wardleader' => 'required',
+            'wardleader' => 'required|exists:family_members,id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:users,email',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        
+        $this->wardleaderidlogin = FamilyMember::whereHas('house', function ($query) {
+            $query->where('ward_id', $this->ward_id);
+        })->get();
+
+        $user = User::create([
+            'name' => $this->wardleader,
+            'email' => $this->email,
+            'password' => Hash::make($this->password),
+            'role'=> $this->wardleaderidlogin->id,
         ]);
 
-        // FamilyMember::updateOrCreate(
-        //     ['id' => $this->wardleader],
-        //     ['wardleader' => 1]
-        // );
+        event(new Registered($user));
+
+        // Auth::login($user);
+
         FamilyMember::query()->update(['wardleader' => 0]);
         FamilyMember::where('id', $this->wardleader)->update(['wardleader' => 1]);
 

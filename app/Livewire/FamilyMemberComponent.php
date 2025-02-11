@@ -55,8 +55,7 @@ class FamilyMemberComponent extends Component
             $this->marital_status = $member->marital_status;
             $this->marriage_date = $member->marriage_date; // Set the marriage date if available
         } else {
-            $this->family_member_id = null;
-            $this->marriage_date = null;
+            $this->resetInputFields();
         }
 
         $this->isOpen = true;
@@ -73,7 +72,7 @@ class FamilyMemberComponent extends Component
 
     public function closeModal()
     {
-        $this->resetInputFields();
+        // $this->resetInputFields();
         $this->isOpen = false;
     }
 
@@ -97,10 +96,12 @@ class FamilyMemberComponent extends Component
         $this->image = '';
         $this->newImage = '';
     }
+   
 
     public function saveFamilyMember()
     {
-        // $this->validate();
+        $this->validate();
+
         if ($this->newImage) {
             $imageName = $this->newImage->store('wards', 'public');
         } else {
@@ -115,7 +116,7 @@ class FamilyMemberComponent extends Component
                 'relationship' => $this->relationship,
                 'primary_contact' => $this->primary_contact,
                 'secondary_contact' => $this->secondary_contact,
-                'whatsapp_number' => $this->primary_contact,
+                'whatsapp_number' => $this->secondary_contact,
                 'email' => $this->email,
                 'dob' => $this->dob,
                 'blood_group' => $this->blood_group,
