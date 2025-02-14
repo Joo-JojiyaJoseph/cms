@@ -9,7 +9,7 @@ class House extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ward_id', 'house_name', 'number_of_members'];
+    protected $fillable = ['ward_id', 'house_name', 'number_of_members','address','about'];
 
     public function ward()
     {

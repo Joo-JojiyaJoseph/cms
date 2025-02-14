@@ -15,7 +15,7 @@ use Illuminate\Validation\Rules;
 class HouseComponent extends Component
 {  public $isOpenWardLeader = false;
 
-    public $ward_id, $houses, $house_id, $house_name, $number_of_members,$ward,$members,$wardleader,$wardleader_name,$email,$password,$wardleaderidlogin;
+    public $ward_id, $houses, $house_id, $house_name, $number_of_members,$ward,$members,$wardleader,$wardleader_name,$email,$password,$wardleaderidlogin,$address,$about;
     public $isOpen = false;
 
     public function mount($ward_id)
@@ -58,8 +58,8 @@ class HouseComponent extends Component
             'email' => 'required|string|lowercase|email|max:255|unique:users,email',
             'password' => ['required'],
         ]);
-        
-       
+
+
 
         $user = User::create([
             'name' => $this->wardleader,
@@ -107,7 +107,8 @@ class HouseComponent extends Component
 
         House::updateOrCreate(
             ['id' => $this->house_id],
-            ['ward_id' => $this->ward_id, 'house_name' => $this->house_name, 'number_of_members' => $this->number_of_members]
+            ['ward_id' => $this->ward_id, 'house_name' => $this->house_name, 'number_of_members' => $this->number_of_members
+            , 'address' => $this->address, 'about' => $this->about]
         );
 
         session()->flash('message', $this->house_id ? 'House updated successfully!' : 'House added successfully!');
