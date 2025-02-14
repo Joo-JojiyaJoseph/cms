@@ -48,7 +48,7 @@ class FamilyMemberComponent extends Component
                 'dob' => $member->dob,
                 'blood_group' => $member->blood_group ? Crypt::decryptString($member->blood_group) : null,
                 'marital_status' => $member->marital_status ? Crypt::decryptString($member->marital_status) : null,
-                'marriage_date' => $member->marital_status === 'Married' ? $member->marriage_date : null,
+                'marriage_date' =>$member->marriage_date ? $member->marriage_date : null,
                 'job' => $member->job ? Crypt::decryptString($member->job) : null,
                 'current_job_location' => $member->current_job_location ? Crypt::decryptString($member->current_job_location) : null,
                 'present_address' => $member->present_address ? Crypt::decryptString($member->present_address) : null,

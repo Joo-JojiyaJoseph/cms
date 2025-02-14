@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('ward_id');
             $table->string('house_name');
+            $table->string('head');
             $table->integer('number_of_members');
             $table->string('address');
             $table->string('about');

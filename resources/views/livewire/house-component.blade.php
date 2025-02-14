@@ -36,7 +36,7 @@
             @foreach ($houses as $house)
                 <div class="bg-gray-100 p-4 rounded shadow">
                     <h2 class="text-xl font-semibold cursor-pointer"
-                        wire:click="goToFamilyMemberDashboard({{ $house->id }})">{{ $house->house_name }}</h2>
+                        wire:click="goToFamilyMemberDashboard({{ $house->id }})">{{ $house->house_name }}_{{ $house->head }}</h2>
                     <p>Members: {{ $house->number_of_members }}</p>
                     <p>Address: {{ $house->address }}</p>
                     <p>About: {{ $house->about }}</p>
@@ -57,6 +57,8 @@
 
                     <input type="text" wire:model="house_name" placeholder="House Name"
                         class="border px-2 py-1 w-full mb-3">
+                        <input type="text" wire:model="head" placeholder="Head Of Family"
+                        class="border px-2 py-1 w-full mb-3">
                     <input type="number" wire:model="number_of_members" placeholder="Number of Members"
                         class="border px-2 py-1 w-full mb-3">
                         <textarea wire:model="address" placeholder="Address"
@@ -69,9 +71,9 @@
                             <input type="date" wire:model="member_of_parish_since" class="border px-2 py-1 w-full">
                         </label>
 
-                    <div class="flex justify-end">
+                    <div class="flex justify-end mt-2">
                         <button wire:click="saveHouse"
-                            class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Save</button>
+                            class="bg-blue-500 text-white px-4 py-2 rounded mr-2 ">Save</button>
                         <button wire:click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
                     </div>
                 </div>
@@ -121,7 +123,7 @@
                     </div> -->
 
                     {{-- </form> --}}
-                    <div class="flex justify-end">
+                    <div class="flex justify-end mt-2">
                         <button wire:click="saveWardLeader"
                             class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Save</button>
                         <button wire:click="closeModalLeader"

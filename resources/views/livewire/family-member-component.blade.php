@@ -41,7 +41,7 @@
                 <button wire:click="deleteFamilyMember({{ $member->id }})"
                     class="bg-red-500 text-white px-2 py-1 rounded mt-2">Delete</button>
             </div> --}}
-            <div class="bg-gray-100 p-4 rounded shadow">
+            <div class="bg-gray-100 p-4 rounded shadow border border-black">
                 <div class="text-center mb-4">
                     @if ($member->image)
                         <img src="{{ asset('storage/' . $member->image) }}" width="50" class="rounded-full">
