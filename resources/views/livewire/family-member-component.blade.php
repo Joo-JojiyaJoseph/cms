@@ -20,19 +20,19 @@
                 <p><strong>Primary Contact:</strong> {{ $member->primary_contact }}</p>
                 <p><strong>Whatsapp:</strong> {{ $member->whatsapp_number }}</p>
                 <p><strong>Email:</strong> {{ $member->email }}</p>
-                <p><strong>Birth:</strong> {{ $member->dob }} | <strong>Blood Group:</strong>
+                <p><strong>Birth:</strong>{{ \Carbon\Carbon::parse($member->dob)->format('d/m/Y') }} |(Age: {{ \Carbon\Carbon::parse($member->dob)->age }} years)  <br/><strong>Blood Group:</strong>
                     {{ $member->blood_group }}</p>
                 <p><strong>Marital Status:</strong> {{ $member->marital_status }}
-                    <!-- | <strong>Spouse:</strong> {{ $member->spouse ?? 'N/A' }} -->
+                   <br/> <strong>Spouse:</strong> {{ $member->spouse ?? 'N/A' }}
                 </p>
-                <p><strong>Job:</strong> {{ $member->job }} | <strong>Location:</strong>
+                <p><strong>Job:</strong> {{ $member->job }} <br/> <strong>Location:</strong>
                     {{ $member->current_job_location }}</p>
                 <p><strong>Permanent Address:</strong> {{ $member->permanent_address }}</p>
                 <p><strong>Present Address:</strong> {{ $member->present_address }}</p>
                 <p><strong>Baptism Name:</strong> {{ $member->baptism_name }} <br/> <strong>Baptism
                         Date:</strong>{{ $member->baptism_date }}</p>
-                <p><strong>Confirmation Date:</strong> {{ $member->confirmation_date }} </p>
-                <p><strong>Member of Parish Since:</strong> {{ $member->member_of_parish_since }}</p>
+                <p><strong>Confirmation Date:</strong>{{ \Carbon\Carbon::parse($member->confirmation_date)->format('d/m/Y') }}  </p>
+                <p><strong>Member of Parish Since:</strong> {{ \Carbon\Carbon::parse($member->member_of_parish_since)->format('d/m/Y') }}</p>
                 <button wire:click="editFamilyMember({{ $member->id }})"
                     class="bg-yellow-500 text-white px-2 py-1 rounded mt-2">Edit</button>
                 <button wire:click="deleteFamilyMember({{ $member->id }})"
@@ -40,7 +40,7 @@
             </div>
         @endforeach
     </div>
-    {{ $marital_status }}
+ 
 
     @if ($isOpen)
     <div wire:key="modal-{{ $family_member_id ?? 'new' }}"
@@ -70,17 +70,32 @@
         <label class="flex-1 min-w-[250px]">
             <select wire:model.live="relationship" class="border px-2 py-1 mb-3 w-full required">
                 <option value="">Select Relationship*</option>
-                <option value="Own">Own</option>
-                <option value="Father">Father</option>
-                <option value="Mother">Mother</option>
-                <option value="Grand Father">Grand Father</option>
-                <option value="Grand Mother">Grand Mother</option>
-                <option value="Wife">Wife</option>
-                <option value="Husband">Husband</option>
-                <option value="Sister">Sister</option>
-                <option value="Brother">Brother</option>
-                <option value="Daughter">Daughter</option>
-                <option value="Son">Son</option>
+                <option value="Head of House">Head of House</option>
+    <option value="Mother">Mother</option>
+    <option value="Father">Father</option>
+    <option value="Daughter">Daughter</option>
+    <option value="Son">Son</option>
+    <option value="Sibling">Sibling</option>
+    <option value="Sister">Sister</option>
+    <option value="Brother">Brother</option>
+    <option value="Wife">Wife</option>
+    <option value="Husband">Husband</option>
+    <option value="Elder Brother/Sister">Elder Brother/Sister</option>
+    <option value="Younger Brother/Sister">Younger Brother/Sister</option>
+    <option value="Grandmother">Grandmother</option>
+    <option value="Grandfather">Grandfather</option>
+    <option value="Great Grandfather">Great Grandfather</option>
+    <option value="Great Grandmother">Great Grandmother</option>
+    <option value="Grandchild">Grand Child</option>
+    <option value="Granddaughter">Granddaughter</option>
+    <option value="Grandson">Grandson</option>
+    <option value="Nephew">Nephew</option>
+    <option value="Niece">Niece</option>
+    <option value="Aunt">Aunt</option>
+    <option value="Uncle">Uncle</option>
+    <option value="Mother-in-law">Mother-in-law</option>
+    <option value="Father-in-law">Father-in-law</option>
+    <option value="Spinster">Spinster</option>
             </select>
             @error('relationship') <span class="text-red-500">{{ $message }}</span> @enderror
         </label>
@@ -111,6 +126,7 @@
         <option value="AB+">AB+</option>
         <option value="AB-">AB-</option>
     </select>
+    @error('blood_group') <span class="text-red-500">{{ $message }}</span> @enderror
 </div>
 
 <div class="flex flex-wrap gap-6  mb-3 ">
@@ -149,7 +165,8 @@
             <option value="Farmer">Farmer</option>
             <option value="House Wife">House Wife</option>
             <option value="Business">Business</option>
-            <option value="Shop">Shop</option>
+            <option value="Retaired">Retaired</option>
+            <option value="Marchant">Marchant</option>
             <option value="Priest">Priest</option>
             <option value="Nun">Nun</option>
             <option value="IT Professional">IT Professional</option>
@@ -160,7 +177,8 @@
             <option value="Fitter">Fitter</option>
             <option value="Plumber">Plumber</option>
             <option value="Driver">Driver</option>
-            <option value="Gov. Job">Gov. Job</option>
+            <option value="Gov. Job">Govt. Employee</option>
+            <option value="Other">Other</option>
         </select>
     </label>
 </div>

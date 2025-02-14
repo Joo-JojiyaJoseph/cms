@@ -55,20 +55,17 @@ class HouseComponent extends Component
 
         $validatedData = $this->validate([
             'wardleader' => 'required|exists:family_members,id',
-            'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:users,email',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required'],
         ]);
         
-        $this->wardleaderidlogin = FamilyMember::whereHas('house', function ($query) {
-            $query->where('ward_id', $this->ward_id);
-        })->get();
+       
 
         $user = User::create([
             'name' => $this->wardleader,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            'role'=> $this->wardleaderidlogin->id,
+            'role'=> $this->ward_id,
         ]);
 
         event(new Registered($user));

@@ -21,8 +21,10 @@
         </div>
 <div class="bg-gray-200 p-4 rounded shadow mt-4 flex gap-6">
     <button wire:click="openModal" class="bg-blue-500 text-white px-4 py-2 rounded">Add House</button>
+    @if(Auth::check() && Auth::user()->role === 'admin')
      <button wire:click="openModalWardLeader" class="bg-blue-500 text-white px-4 py-2 rounded">Add Ward Leader</button>
     <button onclick="window.history.back()" class="bg-gray-500 text-white px-4 py-2 rounded"> Back</button>
+    @endif
 </div>
 
     @if (session()->has('message'))
@@ -72,7 +74,7 @@
                     <!-- Email Address -->
                     <div class="mt-4">
                         <x-input-label for="email" :value="__('Email')" />
-                        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                        <x-text-input wire:model.live="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
@@ -80,7 +82,7 @@
                     <div class="mt-4">
                         <x-input-label for="password" :value="__('Password')" />
 
-                        <x-text-input id="password" class="block mt-1 w-full"
+                        <x-text-input wire:model.live="password" id="password" class="block mt-1 w-full"
                                         type="password"
                                         name="password"
                                         required autocomplete="new-password" />
@@ -89,15 +91,15 @@
                     </div>
 
                     <!-- Confirm Password -->
-                    <div class="mt-4">
+                    <!-- <div class="mt-4">
                         <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
-                        <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                        <x-text-input wire:model.live="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
                                         type="password"
                                         name="password_confirmation" required autocomplete="new-password" />
 
                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                    </div>
+                    </div> -->
 
                 {{-- </form> --}}
                 <div class="flex justify-end">

@@ -27,8 +27,21 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        
+        // return redirect()->intended(route('dashboard', absolute: false));
 
-        return redirect()->intended(route('dashboard', absolute: false));
+         // Check if the user model has a "role" column
+    $user = Auth::user();
+
+    if (Schema::hasColumn('users', 'role') && $user) {
+        if ($user->role === 'admin') {
+            return redirect()->intended(route('dashboard', absolute: false));
+        } else {
+            return redirect()->intended(route('ward.dashboard', ['id' => $user->role])); // Change to your intended route
+        }
+    }
+
+    // return redirect()->intended(route('default.home', absolute: false));
     }
 
     /**

@@ -25,11 +25,7 @@ class FamilyMemberComponent extends Component
         'full_name' => 'required',
         'primary_contact' => 'required',
         'dob' => 'required',
-        'blood_group' => 'required',
         'marital_status' => 'required',
-        'job' => 'required',
-        'current_job_location' => 'required',
-        'permanent_address' => 'required',
     ];
 
     public function mount($house_id)
@@ -118,7 +114,7 @@ class FamilyMemberComponent extends Component
                 'secondary_contact' => $this->secondary_contact,
                 'whatsapp_number' => $this->secondary_contact,
                 'email' => $this->email,
-                'dob' => $this->dob,
+                'dob' => $this->dob?: null,
                 'blood_group' => $this->blood_group,
                 'marital_status' => $this->marital_status,
                 'marriage_date' => $this->marital_status === 'Married' ? $this->marriage_date : null,
@@ -127,9 +123,9 @@ class FamilyMemberComponent extends Component
                 'permanent_address' => $this->permanent_address,
                 'present_address' => $this->present_address,
                 'baptism_name' => $this->baptism_name,
-                'baptism_date' => $this->baptism_date,
-                'confirmation_date' => $this->confirmation_date,
-                'member_of_parish_since' => $this->member_of_parish_since,
+                'baptism_date' => $this->baptism_date?: null,
+                'confirmation_date' => $this->confirmation_date?: null,
+                'member_of_parish_since' => $this->member_of_parish_since?: null,
                 'gender' => $this->gender,
                 'spouse'=>$this->spouse,
                 'image' => $imageName,
