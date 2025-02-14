@@ -98,7 +98,7 @@
                         </tr>
                         <tr>
                             <td class="p-2 font-semibold">Mariage Date</td>
-                            <td class="p-2">{{ $member->marriage_date ?\Carbon\Carbon::parse($member->marriage_date)->format('d/m/Y') : 'N/A' }}</td>
+                            <td class="p-2">{{ $member->marriage_date ? \Carbon\Carbon::parse($member->marriage_date)->format('d/m/Y') : 'N/A' }}</td>
                         </tr>
                         <tr>
                             <td class="p-2 font-semibold">Spouse</td>
