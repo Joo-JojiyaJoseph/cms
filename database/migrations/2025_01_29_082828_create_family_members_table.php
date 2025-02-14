@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('gender')->nullable();
             $table->string('spouse')->nullable();
+            $table->string('father')->nullable();
+            $table->string('mother')->nullable();
             $table->string('primary_contact')->nullable();
             $table->string('secondary_contact')->nullable();
             $table->string('whatsapp_number')->nullable();
@@ -27,7 +29,6 @@ return new class extends Migration
             $table->date('marriage_date')->nullable();
             $table->string('job')->nullable();
             $table->string('current_job_location')->nullable();
-            $table->text('permanent_address')->nullable();
             $table->text('present_address')->nullable();
             $table->boolean('same_as_permanent')->default(false);
             $table->string('baptism_name')->nullable();
@@ -35,7 +36,6 @@ return new class extends Migration
             $table->date('confirmation_date')->nullable();
             $table->string('relationship')->default('Unknown');
             $table->string('wardleader')->default('0');  // Add Relationship Field
-            $table->date('member_of_parish_since')->nullable(); // Add Parish Membership Date
             $table->string('image')->nullable();
 
             $table->timestamps();

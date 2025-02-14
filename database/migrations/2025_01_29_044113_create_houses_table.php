@@ -16,8 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('ward_id');
             $table->string('house_name');
             $table->integer('number_of_members');
-            $table->integer('address');
-            $table->integer('about');
+            $table->string('address');
+            $table->string('about');
+            $table->date('member_of_parish_since')->nullable(); // Add Parish Membership Date
             $table->timestamps();
 
             $table->foreign('ward_id')->references('id')->on('wards')->onDelete('cascade');

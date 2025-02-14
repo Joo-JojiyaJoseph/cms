@@ -20,7 +20,7 @@
             @endif
         </div>
         <div class="bg-gray-200 p-4 rounded shadow mt-4 flex gap-6">
-            <button wire:click="openModal" class="bg-blue-500 text-white px-4 py-2 rounded">Add House</button>
+            <button wire:click="openModal" class="bg-blue-500 text-white px-4 py-2 rounded">Add Family</button>
             @if (Auth::check() && Auth::user()->role === 'admin')
                 <button wire:click="openModalWardLeader" class="bg-blue-500 text-white px-4 py-2 rounded">Add Ward
                     Leader</button>
@@ -40,6 +40,8 @@
                     <p>Members: {{ $house->number_of_members }}</p>
                     <p>Address: {{ $house->address }}</p>
                     <p>About: {{ $house->about }}</p>
+                    <p><strong>Resident since:</strong>
+                        {{$house->member_of_parish_since ? \Carbon\Carbon::parse($house->member_of_parish_since)->format('d/m/Y'):'' }}</p>
                     <button wire:click="editHouse({{ $house->id }})"
                         class="bg-yellow-500 text-white px-2 py-1 rounded mt-2">Edit</button>
                     <button wire:click="deleteHouse({{ $house->id }})"
@@ -51,12 +53,21 @@
         @if ($isOpen)
             <div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
                 <div class="bg-white p-5 rounded shadow-lg">
-                    <h2 class="text-lg mb-4">{{ $house_id ? 'Edit House' : 'Add House' }}</h2>
+                    <h2 class="text-lg mb-4">{{ $house_id ? 'Edit Family' : 'Add Family' }}</h2>
 
                     <input type="text" wire:model="house_name" placeholder="House Name"
                         class="border px-2 py-1 w-full mb-3">
                     <input type="number" wire:model="number_of_members" placeholder="Number of Members"
                         class="border px-2 py-1 w-full mb-3">
+                        <textarea wire:model="address" placeholder="Address"
+                        class="border px-2 py-1 w-full mb-3"></textarea>
+                         <textarea wire:model="about" placeholder="About"
+                        class="border px-2 py-1 w-full mb-3"></textarea>
+
+                        <label class="flex-1 min-w-[250px]">
+                            Resident since
+                            <input type="date" wire:model="member_of_parish_since" class="border px-2 py-1 w-full">
+                        </label>
 
                     <div class="flex justify-end">
                         <button wire:click="saveHouse"

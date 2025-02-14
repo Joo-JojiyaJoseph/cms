@@ -15,7 +15,7 @@ use Illuminate\Validation\Rules;
 class HouseComponent extends Component
 {  public $isOpenWardLeader = false;
 
-    public $ward_id, $houses, $house_id, $house_name, $number_of_members,$ward,$members,$wardleader,$wardleader_name,$email,$password,$wardleaderidlogin,$address,$about;
+    public $ward_id, $houses, $house_id, $house_name, $number_of_members,$ward,$members,$wardleader,$wardleader_name,$email,$password,$wardleaderidlogin,$address,$about,$member_of_parish_since;
     public $isOpen = false;
 
     public function mount($ward_id)
@@ -108,7 +108,8 @@ class HouseComponent extends Component
         House::updateOrCreate(
             ['id' => $this->house_id],
             ['ward_id' => $this->ward_id, 'house_name' => $this->house_name, 'number_of_members' => $this->number_of_members
-            , 'address' => $this->address, 'about' => $this->about]
+            , 'address' => $this->address, 'about' => $this->about,
+            'member_of_parish_since' => $this->member_of_parish_since?: null,]
         );
 
         session()->flash('message', $this->house_id ? 'House updated successfully!' : 'House added successfully!');
@@ -121,6 +122,9 @@ class HouseComponent extends Component
         $this->house_id = $house->id;
         $this->house_name = $house->house_name;
         $this->number_of_members = $house->number_of_members;
+        $this->address = $house->address;
+        $this->about = $house->about;
+        $this->member_of_parish_since = $house->member_of_parish_since;
         $this->isOpen = true;
     }
 

@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/ward/{id}', [HomeController::class, 'warddashboard'])->name('ward.dashboard');
 Route::get('/house/{id}', [HomeController::class, 'familydashboard'])->name('house.dashboard');
-Route::get('familyMemberReport', [HomeController::class, 'familyMemberReport'])->name('familyMemberReport');
+Route::get('/familyMemberReport', [HomeController::class, 'familyMemberReport'])->name('familyMemberReport');
 
 });
 

@@ -2,15 +2,15 @@
     <div >
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             <div class="bg-white p-4 shadow rounded-lg">
-                <h2 class="text-lg font-bold">Palakkad</h2>
-                <p class="text-green-500">Diocese</p>
+                <h2 class="text-lg font-bold text-green-700">Diocese</h2>
+                <p class="text-red-500">Palakkad</p>
             </div>
             <div class="bg-white p-4 shadow rounded-lg">
-                <h2 class="text-lg font-bold">Mannarkkad</h2>
-                <p class="text-green-500">Forane</p>
+                <h2 class="text-lg font-bold text-green-700">Forane</h2>
+                <p class="text-red-500">Mannarkkad</p>
             </div>
             <div class="bg-white p-4 shadow rounded-lg">
-                <h2 class="text-lg font-bold">Holy Spirit Forane Church Perimbadari</h2>
+                <h2 class="text-lg font-bold text-green-700">Holy Spirit Forane Church Perimbadari</h2>
                 <p class="text-red-500">Church</p>
             </div>
         </div>
