@@ -34,12 +34,12 @@
 
         <div class="grid xl:grid-cols-3 grid-cols-1  gap-4 mt-4">
             @foreach ($houses as $house)
-                <div class="bg-gray-100 p-4 rounded shadow">
-                    <h2 class="text-xl font-semibold cursor-pointer"
-                        wire:click="goToFamilyMemberDashboard({{ $house->id }})">{{ $house->house_name }}_{{ $house->head }}</h2>
-                    <p>Members: {{ $house->number_of_members }}</p>
-                    <p>Address: {{ $house->address }}</p>
-                    <p>About: {{ $house->about }}</p>
+                <div class="bg-gray-100 p-4 rounded shadow" >
+                    <h2 class="text-xl font-semibold cursor-pointer" 
+                wire:click="goToFamilyMemberDashboard({{ $house->id }})">{{ $house->house_name }} - {{ $house->head }}</h2>
+                    <p><strong>Members:</strong> {{ $house->number_of_members }}</p>
+                    <p><strong>Address: </strong>{{ $house->address }}</p>
+                    <p><strong>About:</strong> {{ $house->about }}</p>
                     <p><strong>Resident since:</strong>
                         {{$house->member_of_parish_since ? \Carbon\Carbon::parse($house->member_of_parish_since)->format('d/m/Y'):'' }}</p>
                     <button wire:click="editHouse({{ $house->id }})"

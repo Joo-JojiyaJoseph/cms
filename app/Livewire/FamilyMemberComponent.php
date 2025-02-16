@@ -5,12 +5,13 @@ namespace App\Livewire;
 use App\Models\FamilyMember;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Models\House;
 use Illuminate\Support\Facades\Crypt;
 
 class FamilyMemberComponent extends Component
 {
     use WithFileUploads;
-    public $house_id, $family_members,$image, $newImage;
+    public $house_id, $family_members,$image, $newImage,$houses;
     public $family_member_id, $full_name, $primary_contact, $secondary_contact, $whatsapp_number,
      $email, $dob, $blood_group, $job, $current_job_location,$father,$mother,
      $permanent_address, $present_address, $baptism_name, $baptism_date,$confirmation_date,$relationship, $member_of_parish_since,$gender;
@@ -37,6 +38,7 @@ class FamilyMemberComponent extends Component
 
     public function loadFamilyMembers()
     {
+        $this->houses = House::where('id', $this->house_id)->first();
         $this->family_members = FamilyMember::where('house_id', $this->house_id)->get()->map(function ($member) {
             return (object) [
                 'id' => $member->id,
@@ -124,9 +126,19 @@ class FamilyMemberComponent extends Component
         $this->validate();
 
         if ($this->newImage) {
-            $imageName = $this->newImage->store('wards', 'public');
+            // Create a dynamic folder path using house_id
+            $folderPath = 'members/' . $this->house_id;
+            
+            // Generate a unique filename using full_name and timestamp
+            $imageName = $this->full_name . '_' . time() . '.' . $this->newImage->getClientOriginalExtension();
+            
+            // Store the image inside the dynamically created folder
+            $this->newImage->storeAs($folderPath, $imageName, 'public');
+        
+            // Save the image path in the database
+            $imagePath = $folderPath . '/' . $imageName;
         } else {
-            $imageName = $this->image;
+            $imagePath = $this->image;
         }
 
         FamilyMember::updateOrCreate(
@@ -138,7 +150,7 @@ class FamilyMemberComponent extends Component
                 'primary_contact' => Crypt::encryptString($this->primary_contact),
                 'secondary_contact' => Crypt::encryptString($this->secondary_contact),
                 'email' => Crypt::encryptString($this->email),
-                'dob' => $this->dob ?? null,
+                'dob' => $this->dob ?$this->dob: null,
                 'blood_group' => Crypt::encryptString($this->blood_group),
                 'marital_status' => Crypt::encryptString($this->marital_status),
                 'marriage_date' => $this->marriage_date ? $this->marriage_date : null,
@@ -146,11 +158,11 @@ class FamilyMemberComponent extends Component
                 'current_job_location' => Crypt::encryptString($this->current_job_location),
                 'present_address' => Crypt::encryptString($this->present_address),
                 'baptism_name' => Crypt::encryptString($this->baptism_name),
-                'baptism_date' => $this->baptism_date ?? null,
-                'confirmation_date' => $this->confirmation_date ?? null,
+                'baptism_date' => $this->baptism_date ?$this->baptism_date: null,
+                'confirmation_date' => $this->confirmation_date ?$this->confirmation_date: null,
                 'gender' => Crypt::encryptString($this->gender),
                 'spouse' => Crypt::encryptString($this->spouse),
-                'image' => $imageName, // If image is available
+                'image' => $imagePath, // If image is available
                 'father' => Crypt::encryptString($this->father),
                 'mother' => Crypt::encryptString($this->mother),
             ]
@@ -168,6 +180,7 @@ class FamilyMemberComponent extends Component
         $this->family_member_id = $id;
 
         // Wrap decryption in try-catch to handle invalid payloads
+        $this->image = $this->safeDecrypt($member->imagePath);
         $this->full_name = $this->safeDecrypt($member->full_name);
         $this->relationship = $this->safeDecrypt($member->relationship);
         $this->primary_contact = $this->safeDecrypt($member->primary_contact);

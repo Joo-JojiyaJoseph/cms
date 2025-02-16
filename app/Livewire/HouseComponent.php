@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Crypt;
 
 class HouseComponent extends Component
 {  public $isOpenWardLeader = false;
@@ -28,16 +29,48 @@ class HouseComponent extends Component
 
         $this->ward = Ward::findOrFail($this->ward_id);
         $this->houses = House::where('ward_id', $this->ward_id)->get();
-        $this->members = FamilyMember::whereHas('house', function ($query) {
-            $query->where('ward_id', $this->ward_id);
-        })->get();
+$this->members = FamilyMember::whereHas('house', function ($query) {
+        $query->where('ward_id', $this->ward_id);
+    })->get()->map(function ($member) {
+        return (object) [
+            'id' => $member->id,
+            'full_name' => $member->full_name ? Crypt::decryptString($member->full_name) : null,
+        ];
+    });
 
-        $this->wardleader_name = FamilyMember::whereHas('house', function ($query) {
-            $query->where('ward_id', $this->ward_id);
-        })->where('wardleader',1)->first();
+$this->wardleader_name = FamilyMember::whereHas('house', function ($query) {
+        $query->where('ward_id', $this->ward_id);
+    })->where('wardleader', 1)->first();
+
+if ($this->wardleader_name) {
+    $this->wardleader_name->full_name = Crypt::decryptString($this->wardleader_name->full_name);
+}
 
 
         return view('livewire.house-component');
+    }
+
+    public function loadfamily()
+    {
+        $this->ward = Ward::findOrFail($this->ward_id);
+        $this->houses = House::where('ward_id', $this->ward_id)->get();
+$this->members = FamilyMember::whereHas('house', function ($query) {
+        $query->where('ward_id', $this->ward_id);
+    })->get()->map(function ($member) {
+        return (object) [
+            'id' => $member->id,
+            'full_name' => $member->full_name ? Crypt::decryptString($member->full_name) : null,
+        ];
+    });
+
+$this->wardleader_name = FamilyMember::whereHas('house', function ($query) {
+        $query->where('ward_id', $this->ward_id);
+    })->where('wardleader', 1)->first();
+
+if ($this->wardleader_name) {
+    $this->wardleader_name->full_name = Crypt::decryptString($this->wardleader_name->full_name);
+}
+
     }
     public function openModalWardLeader()
     {
@@ -134,6 +167,7 @@ class HouseComponent extends Component
     {
         House::findOrFail($id)->delete();
         session()->flash('message', 'House deleted successfully!');
+        $this->loadfamily();
     }
     public function goToFamilyMemberDashboard($id)
     {
