@@ -73,14 +73,14 @@ class FamilyMemberComponent extends Component
         // $this->resetInputFields();
         // $this->isOpen = true;
 
-        if ($id) {
-            $member = FamilyMember::find($id);
-            $this->family_member_id = $member->id;
-            $this->marital_status = $member->marital_status;
-            $this->marriage_date = $member->marriage_date; // Set the marriage date if available
-        } else {
-            $this->resetInputFields();
-        }
+        // if ($id) {
+        //     $member = FamilyMember::find($id);
+        //     $this->family_member_id = $member->id;
+        //     $this->marital_status = $member->marital_status;
+        //     $this->marriage_date = $member->marriage_date; // Set the marriage date if available
+        // } else {
+        //     $this->resetInputFields();
+        // }
 
         $this->isOpen = true;
     }
@@ -126,15 +126,26 @@ class FamilyMemberComponent extends Component
         $this->validate();
 
         if ($this->newImage) {
+            // Retrieve existing member record
+            $existingMember = FamilyMember::find($this->family_member_id);
+
+            // Delete the old image if it exists
+            if ($existingMember && $existingMember->image) {
+                $oldImagePath = storage_path('app/public/' . $existingMember->image);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
             // Create a dynamic folder path using house_id
             $folderPath = 'members/' . $this->house_id;
-            
+
             // Generate a unique filename using full_name and timestamp
             $imageName = $this->full_name . '_' . time() . '.' . $this->newImage->getClientOriginalExtension();
-            
+
             // Store the image inside the dynamically created folder
             $this->newImage->storeAs($folderPath, $imageName, 'public');
-        
+
             // Save the image path in the database
             $imagePath = $folderPath . '/' . $imageName;
         } else {
@@ -170,6 +181,7 @@ class FamilyMemberComponent extends Component
 
 
         session()->flash('message', $this->family_member_id ? 'Family Member Updated Successfully!' : 'Family Member Added Successfully!');
+        $this->resetInputFields();
         $this->closeModal();
         $this->loadFamilyMembers(); // Reload members after update
     }
@@ -180,7 +192,7 @@ class FamilyMemberComponent extends Component
         $this->family_member_id = $id;
 
         // Wrap decryption in try-catch to handle invalid payloads
-        $this->image = $this->safeDecrypt($member->imagePath);
+        $this->image =$member->imagePath;
         $this->full_name = $this->safeDecrypt($member->full_name);
         $this->relationship = $this->safeDecrypt($member->relationship);
         $this->primary_contact = $this->safeDecrypt($member->primary_contact);
