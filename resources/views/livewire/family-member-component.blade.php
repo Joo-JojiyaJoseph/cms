@@ -14,7 +14,7 @@
                 <div class="text-center mb-4">
                     <div class="flex">
                     @if ($member->image)
-                        <img src="{{ asset('storage/' . $member->image) }}" width="50" class="rounded-full">
+                        <img src="{{ asset('storage/' . $member->image) }}" width="80" class="rounded-full">
                     @endif
                     <div >
                     <p><strong>{{ $houses->address }}</strong></p>
@@ -35,7 +35,7 @@
                     <tbody>
                         <tr>
                             <td class="p-2 font-semibold">Full Name</td>
-                            <td class="p-2">{{ $member->full_name }}}</td>
+                            <td class="p-2">{{ $member->full_name }}</td>
                         </tr>
                         <tr>
                             <td class="p-2 font-semibold">Sex</td>
@@ -132,7 +132,7 @@
 
 
                     <div class="flex flex-wrap gap-4">
-                        <input type="file" wire:model="newImage" class="border px-2 py-1 mb-3 flex-1 min-w-[250px]">
+                        <input type="file" wire:model="newImage" class="border px-2 py-1 mb-3 flex-1 min-w-[250px]" accept="image/*" capture="camera">
                         <div class="flex-col">
                             <input type="text" wire:model="full_name" placeholder="Full Name*"
                                 class="border px-2 py-1 mb-3 flex-1 min-w-[250px] required">

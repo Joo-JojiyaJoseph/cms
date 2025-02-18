@@ -126,7 +126,7 @@
                 </div>
             </aside>
             <!-- Page Content -->
-            <main class="p-10 w-full">
+            <main class="py-10 w-full">
                 {{ $slot }}
             </main>
         </div>

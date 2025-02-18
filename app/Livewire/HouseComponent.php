@@ -169,8 +169,8 @@ if ($this->wardleader_name) {
         session()->flash('message', 'House deleted successfully!');
         $this->loadfamily();
     }
-    public function goToFamilyMemberDashboard($id)
+    public function goToFamilyMemberDashboard($id,$houseid)
     {
-        return redirect()->route('house.dashboard', ['id' => $id]);
+        return redirect()->route('house.dashboard', ['id' => $id, 'houseId' => $houseid]);
     }
 }

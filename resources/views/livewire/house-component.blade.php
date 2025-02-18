@@ -36,7 +36,7 @@
             @foreach ($houses as $house)
                 <div class="bg-gray-100 p-4 rounded shadow" >
                     <h2 class="text-xl font-semibold cursor-pointer" 
-                wire:click="goToFamilyMemberDashboard({{ $house->id }})">{{ $house->house_name }} - {{ $house->head }}</h2>
+                wire:click="goToFamilyMemberDashboard({{ $ward->id }}, {{ $house->id }})">{{ $house->house_name }} - {{ $house->head }}</h2>
                     <p><strong>Members:</strong> {{ $house->number_of_members }}</p>
                     <p><strong>Address: </strong>{{ $house->address }}</p>
                     <p><strong>About:</strong> {{ $house->about }}</p>

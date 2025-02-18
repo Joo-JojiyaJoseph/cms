@@ -141,6 +141,7 @@ class FamilyMemberComponent extends Component
             $imagePath = $this->image;
         }
 
+        if ($this->newImage) {
         FamilyMember::updateOrCreate(
             ['id' => $this->family_member_id],
             [
@@ -167,20 +168,50 @@ class FamilyMemberComponent extends Component
                 'mother' => Crypt::encryptString($this->mother),
             ]
         );
+    
+    } else {
+        FamilyMember::updateOrCreate(
+            ['id' => $this->family_member_id],
+            [
+                'house_id' => $this->house_id,
+                'full_name' => Crypt::encryptString($this->full_name),
+                'relationship' => Crypt::encryptString($this->relationship),
+                'primary_contact' => Crypt::encryptString($this->primary_contact),
+                'secondary_contact' => Crypt::encryptString($this->secondary_contact),
+                'email' => Crypt::encryptString($this->email),
+                'dob' => $this->dob ?$this->dob: null,
+                'blood_group' => Crypt::encryptString($this->blood_group),
+                'marital_status' => Crypt::encryptString($this->marital_status),
+                'marriage_date' => $this->marriage_date ? $this->marriage_date : null,
+                'job' => Crypt::encryptString($this->job),
+                'current_job_location' => Crypt::encryptString($this->current_job_location),
+                'present_address' => Crypt::encryptString($this->present_address),
+                'baptism_name' => Crypt::encryptString($this->baptism_name),
+                'baptism_date' => $this->baptism_date ?$this->baptism_date: null,
+                'confirmation_date' => $this->confirmation_date ?$this->confirmation_date: null,
+                'gender' => Crypt::encryptString($this->gender),
+                'spouse' => Crypt::encryptString($this->spouse),
+                'father' => Crypt::encryptString($this->father),
+                'mother' => Crypt::encryptString($this->mother),
+            ]
+        );
+    }
 
 
         session()->flash('message', $this->family_member_id ? 'Family Member Updated Successfully!' : 'Family Member Added Successfully!');
+        $this->resetInputFields();
         $this->closeModal();
         $this->loadFamilyMembers(); // Reload members after update
     }
 
     public function editFamilyMember($id)
     {
+        $this->resetInputFields();
         $member = FamilyMember::findOrFail($id);
         $this->family_member_id = $id;
 
         // Wrap decryption in try-catch to handle invalid payloads
-        $this->image = $this->safeDecrypt($member->imagePath);
+        $this->image = $member->imagePath;
         $this->full_name = $this->safeDecrypt($member->full_name);
         $this->relationship = $this->safeDecrypt($member->relationship);
         $this->primary_contact = $this->safeDecrypt($member->primary_contact);

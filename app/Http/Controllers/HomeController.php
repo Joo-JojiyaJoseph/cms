@@ -14,8 +14,8 @@ class HomeController extends Controller
             $ward = Ward::findOrFail($id);
             return view('ward-dashboard', compact('ward'));
         }
-        public function familydashboard($id){
-            $house = House::findOrFail($id);
+        public function familydashboard($id,$houseId){
+            $house = House::findOrFail($houseId);
             $familyMembers = $house->familyMembers;  // Assuming relation is defined in the House model
             return view('familydashboard', compact('house', 'familyMembers'));
         }
